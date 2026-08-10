@@ -9,7 +9,7 @@ the issue that change is expected to fix.
 | Path | Source | Contents |
 | --- | --- | --- |
 | `/` | `plans/visuals/team-scrum-flow-review.html` | Cadence timeline and per-cadence detail |
-| `/team-scrum-flow-issues` | `plans/visuals/team-scrum-flow-issues.html` | Open issues and follow-ups |
+| `/team-scrum-flow-issues.html` | `plans/visuals/team-scrum-flow-issues.html` | Open issues and follow-ups |
 
 Both pages are self-contained HTML with inline CSS and JavaScript. The only
 external dependency is Google Fonts.
