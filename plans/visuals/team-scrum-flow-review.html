@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveOps Cadences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ───────────────────────── Theme: Editorial (navy + gold) ───────────────────────── */
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --bg: #faf8f2;
+  --surface: #ffffff;
+  --surface2: #f5f0e6;
+  --surface-elevated: #fffdf6;
+  --border: rgba(30, 30, 50, 0.09);
+  --border-bright: rgba(30, 30, 50, 0.18);
+  --text: #1a1814;
+  --text-dim: #7a7468;
+  --text-bright: #0f0d0a;
+  --accent: #b8860b;
+  --accent-dim: rgba(184, 134, 11, 0.08);
+
+  /* cadence colors */
+  --c-monthly: #b8860b;   --c-monthly-dim: rgba(184, 134, 11, 0.10);
+  --c-pregroom:#0e7490;   --c-pregroom-dim:rgba(14, 116, 144, 0.10);
+  --c-groom:   #0f766e;   --c-groom-dim:   rgba(15, 118, 110, 0.10);
+  --c-preplan: #7c3aed;   --c-preplan-dim: rgba(124, 58, 237, 0.10);
+  --c-review:  #9f1239;   --c-review-dim:  rgba(159, 18, 57, 0.10);
+  --c-plan:    #4d7c0f;   --c-plan-dim:    rgba(77, 124, 15, 0.10);
+  --c-weekly:  #34518a;   --c-weekly-dim:  rgba(52, 81, 138, 0.10);
+  --c-daily:   #7a7468;   --c-daily-dim:   rgba(122, 116, 104, 0.12);
+
+  --red: #b91c1c;   --red-dim: rgba(185, 28, 28, 0.07);
+  --amber: #b45309; --amber-dim: rgba(180, 83, 9, 0.08);
+  --green: #4d7c0f; --green-dim: rgba(77, 124, 15, 0.08);
+  --blue: #34518a;  --blue-dim: rgba(52, 81, 138, 0.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1729;
+    --surface: #162040;
+    --surface2: #1a2547;
+    --surface-elevated: #1d2b52;
+    --border: rgba(200, 180, 140, 0.10);
+    --border-bright: rgba(200, 180, 140, 0.22);
+    --text: #e8e4d8;
+    --text-dim: #9a9484;
+    --text-bright: #f7f4ea;
+    --accent: #d4a73a;
+    --accent-dim: rgba(212, 167, 58, 0.12);
+
+    --c-monthly: #d4a73a;  --c-monthly-dim: rgba(212, 167, 58, 0.14);
+    --c-pregroom:#67e8f9;  --c-pregroom-dim:rgba(103, 232, 249, 0.12);
+    --c-pregroom:#67e8f9;  --c-pregroom-dim:rgba(103, 232, 249, 0.12);
+  --c-groom:   #5eead4;  --c-groom-dim:   rgba(94, 234, 212, 0.12);
+    --c-preplan: #c4b5fd;  --c-preplan-dim: rgba(196, 181, 253, 0.12);
+    --c-review:  #fda4af;  --c-review-dim:  rgba(253, 164, 175, 0.12);
+    --c-plan:    #a3e635;  --c-plan-dim:    rgba(163, 230, 53, 0.12);
+    --c-weekly:  #8fb3e8;  --c-weekly-dim:  rgba(143, 179, 232, 0.12);
+    --c-daily:   #9a9484;  --c-daily-dim:   rgba(154, 148, 132, 0.14);
+
+    --red: #fca5a5;   --red-dim: rgba(252, 165, 165, 0.10);
+    --amber: #fbbf24; --amber-dim: rgba(251, 191, 36, 0.10);
+    --green: #a3e635; --green-dim: rgba(163, 230, 53, 0.10);
+    --blue: #8fb3e8;  --blue-dim: rgba(143, 179, 232, 0.10);
+  }
+}
+[data-theme="dark"] {
+  --bg: #0f1729;
+  --surface: #162040;
+  --surface2: #1a2547;
+  --surface-elevated: #1d2b52;
+  --border: rgba(200, 180, 140, 0.10);
+  --border-bright: rgba(200, 180, 140, 0.22);
+  --text: #e8e4d8;
+  --text-dim: #9a9484;
+  --text-bright: #f7f4ea;
+  --accent: #d4a73a;
+  --accent-dim: rgba(212, 167, 58, 0.12);
+
+  --c-monthly: #d4a73a;  --c-monthly-dim: rgba(212, 167, 58, 0.14);
+  --c-pregroom:#67e8f9;  --c-pregroom-dim:rgba(103, 232, 249, 0.12);
+  --c-groom:   #5eead4;  --c-groom-dim:   rgba(94, 234, 212, 0.12);
+  --c-preplan: #c4b5fd;  --c-preplan-dim: rgba(196, 181, 253, 0.12);
+  --c-review:  #fda4af;  --c-review-dim:  rgba(253, 164, 175, 0.12);
+  --c-plan:    #a3e635;  --c-plan-dim:    rgba(163, 230, 53, 0.12);
+  --c-weekly:  #8fb3e8;  --c-weekly-dim:  rgba(143, 179, 232, 0.12);
+  --c-daily:   #9a9484;  --c-daily-dim:   rgba(154, 148, 132, 0.14);
+
+  --red: #fca5a5;   --red-dim: rgba(252, 165, 165, 0.10);
+  --amber: #fbbf24; --amber-dim: rgba(251, 191, 36, 0.10);
+  --green: #a3e635; --green-dim: rgba(163, 230, 53, 0.10);
+  --blue: #8fb3e8;  --blue-dim: rgba(143, 179, 232, 0.10);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, var(--accent-dim) 0%, transparent 55%);
+  padding: 48px 32px 80px;
+  overflow-wrap: break-word;
+}
+.page { max-width: 1100px; margin: 0 auto; }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text-bright);
+  letter-spacing: -0.5px;
+}
+h1 em { color: var(--accent); font-style: italic; }
+.subtitle { color: var(--text-dim); margin-top: 10px; max-width: 68ch; font-size: 16px; }
+
+a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+
+/* source links */
+.sources {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 11.5px;
+}
+.sources a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-dim); text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.sources a::before { content: '↗'; color: var(--accent); }
+.sources a:hover { color: var(--text); border-color: var(--border-bright); }
+.sources a.is-sibling { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); background: var(--accent-dim); font-weight: 600; }
+.sources a.is-sibling::before { content: '→'; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 56px 0 18px;
+}
+.section-label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-bright); }
+.section-label small { color: var(--text-dim); font-weight: 400; letter-spacing: 1px; text-transform: none; }
+
+/* ───────────────────────── Theme toggle ───────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 300;
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-dim);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: background 0.15s, color 0.15s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.theme-toggle:hover { background: var(--surface2); color: var(--text); }
+
+/* ───────────────────────── Timeline ───────────────────────── */
+.timeline-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 18px 14px;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.05);
+}
+.timeline-scroll { overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+
+.tl {
+  display: grid;
+  grid-template-columns: 140px repeat(25, minmax(34px, 1fr));
+  min-width: 1080px;
+  align-items: center;
+  row-gap: 6px;
+}
+.tl > * { min-width: 0; }
+
+/* header rows */
+.tl-week {
+  grid-row: 1;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim);
+  text-align: center; padding: 4px 0 2px;
+  border-bottom: 1px solid var(--border);
+}
+.tl-day {
+  grid-row: 2;
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
+  text-align: center; padding-bottom: 6px;
+}
+.tl-corner { grid-row: 1 / 3; grid-column: 1; }
+
+/* lane label */
+.tl-label {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  color: var(--text-dim); padding-right: 12px; text-align: right;
+  line-height: 1.3;
+}
+
+/* lane track: full-width faint line behind markers; July (prev month) zone tinted */
+.tl-lane {
+  position: relative; height: 34px;
+  display: grid; grid-template-columns: subgrid; grid-column: 2 / 27;
+  align-items: center;
+  background: linear-gradient(to right, var(--c-daily-dim) 0 20%, transparent 20%);
+}
+.tl-lane::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 50%;
+  border-top: 1px dashed var(--border-bright);
+}
+/* sprint boundary rule between sprint 1 and sprint 2 (after 15 of 25 days) */
+.tl-lane::after {
+  content: ''; position: absolute; top: -3px; bottom: -3px; left: 60%;
+  border-left: 1px solid var(--border-bright);
+}
+/* previous-month header cells */
+.tl-week--prev, .tl-day--prev { font-style: italic; opacity: 0.65; }
+
+/* sprint bar */
+.tl-bar {
+  position: relative; z-index: 1; height: 22px; border-radius: 6px;
+  background: var(--c-daily-dim);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px;
+  color: var(--text-dim); text-transform: uppercase;
+}
+.tl-bar--s1, .tl-bar--s2 { background: var(--accent-dim); border-color: color-mix(in srgb, var(--accent) 35%, transparent); color: var(--accent); }
+.tl-bar--daily { background: var(--c-daily-dim); }
+
+/* clickable marker */
+.tl-mark {
+  position: relative; z-index: 2;
+  width: 22px; height: 22px; margin: 0 auto;
+  border: 2px solid var(--mk, var(--accent));
+  background: var(--surface);
+  border-radius: 4px;
+  transform: rotate(45deg);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  padding: 0;
+}
+.tl-mark::after {
+  content: ''; position: absolute; inset: 4px; border-radius: 2px;
+  background: var(--mk, var(--accent)); opacity: 0.25; transition: opacity 0.15s;
+}
+.tl-mark:hover { transform: rotate(45deg) scale(1.25); box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+.tl-mark:hover::after, .tl-mark.is-active::after { opacity: 1; }
+.tl-mark.is-active { transform: rotate(45deg) scale(1.2); box-shadow: 0 0 0 4px color-mix(in srgb, var(--mk) 22%, transparent); }
+.tl-mark:focus-visible { outline: 2px solid var(--mk); outline-offset: 3px; }
+
+/* legend / pills */
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.pill {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-dim);
+  transition: all 0.15s ease;
+}
+.pill::before { content: ''; width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); background: var(--mk, var(--accent)); }
+.pill:hover { color: var(--text); border-color: var(--mk); }
+.pill.is-active {
+  color: var(--mk); border-color: var(--mk);
+  background: color-mix(in srgb, var(--mk) 10%, var(--surface));
+  font-weight: 600;
+}
+
+/* ───────────────────────── Cadence detail panel ───────────────────────── */
+.cadence-detail { display: none; scroll-margin-top: 24px; }
+.cadence-detail.is-open { display: block; animation: fadeUp 0.35s ease-out both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.cd-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--mk, var(--accent));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mk, var(--accent)) 6%, var(--surface));
+  margin-bottom: 18px;
+}
+.cd-head h2 {
+  font-family: var(--font-display); font-weight: 400; font-size: 30px;
+  color: var(--text-bright); line-height: 1.15;
+}
+.cd-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px; }
+.cd-meta b { color: var(--mk, var(--accent)); font-weight: 600; }
+.cd-roles { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); }
+.cd-roles b { color: var(--text); font-weight: 600; }
+.cd-purpose { flex-basis: 100%; color: var(--text-dim); font-size: 14px; font-style: italic; }
+
+/* ───────────────────────── Role sub-tabs (built by script from each row's Who) ───────────────────────── */
+.role-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  margin-bottom: 14px; padding: 10px 12px;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+}
+.role-tab {
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-dim); transition: all 0.15s ease;
+}
+.role-tab:hover { color: var(--text); border-color: var(--rt, var(--accent)); }
+.role-tab.is-active {
+  color: var(--rt, var(--accent)); border-color: var(--rt, var(--accent));
+  background: color-mix(in srgb, var(--rt, var(--accent)) 12%, var(--surface));
+}
+.role-tab:focus-visible { outline: 2px solid var(--rt, var(--accent)); outline-offset: 2px; }
+.role-tab .n { font-size: 10px; font-weight: 500; opacity: 0.75; }
+.role-tab--po   { --rt: var(--amber); }
+.role-tab--dev  { --rt: var(--c-groom); }
+.role-tab--qc   { --rt: var(--c-preplan); }
+.role-tab--lead { --rt: var(--c-review); }
+.role-tab--head { --rt: var(--accent); }
+.role-hint {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim);
+  margin-left: auto; padding-left: 10px;
+}
+/* .cd-row sets display:grid, which would beat the UA [hidden] rule */
+.cd-row[hidden], .do-owner[hidden] { display: none; }
+/* first surviving owner group must not keep the separator of a hidden sibling */
+.do-owner.is-first { margin-top: 0; padding-top: 0; border-top: none; }
+
+/* ───────────────────────── Cadence rows (Outcome / Do what / Issue), grouped by time marker ───────────────────────── */
+.cd-cols {
+  display: grid; grid-template-columns: 0.95fr 1.75fr 1fr;
+  gap: 0 1px; margin-bottom: 8px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-dim);
+}
+.cd-cols > * { padding: 0 16px; }
+
+.cd-row {
+  display: grid; grid-template-columns: 0.95fr 1.75fr 1fr;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); overflow: hidden; margin-bottom: 12px;
+}
+.cd-row > * { min-width: 0; padding: 14px 16px; }
+.cd-cell + .cd-cell { border-left: 1px solid var(--border); }
+.cd-cell__label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px; color: var(--text-dim);
+}
+.cd-cell__label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.cd-cell--out { background: color-mix(in srgb, var(--mk, var(--accent)) 5%, var(--surface)); }
+.cd-cell--out p { font-size: 14.5px; font-weight: 600; color: var(--text-bright); }
+.cd-cell--out p small { display: block; font-weight: 400; color: var(--text-dim); margin-top: 6px; font-size: 13px; }
+.cd-cell--out ul { list-style: none; margin-top: 6px; }
+.cd-cell--out li { padding: 2px 0 2px 14px; position: relative; font-size: 13px; color: var(--text-dim); font-weight: 400; }
+.cd-cell--out li::before { content: '·'; position: absolute; left: 2px; font-weight: 700; }
+.cd-cell--do ul { list-style: none; }
+.cd-cell--do li { padding: 4px 0; position: relative; font-size: 14px; }
+.cd-cell--do li ul { margin-top: 3px; }
+.cd-cell--do li li { font-size: 13.2px; color: var(--text-dim); padding-left: 14px; }
+.cd-cell--do li li::before { content: '·'; position: absolute; left: 2px; color: var(--text-dim); font-weight: 700; }
+.cd-cell--meta { background: var(--surface2); }
+
+/* owner sub-groups inside a Do-what cell */
+.do-owner + .do-owner { margin-top: 8px; }
+.do-owner__label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 3px; color: var(--text-dim);
+}
+
+/* time-marker header grouping the rows that share one "by when" */
+.cd-group {
+  display: flex; align-items: center; gap: 10px; margin: 30px 0 12px;
+  font-family: var(--font-mono); font-size: 17px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.2px; color: var(--mk, var(--accent));
+}
+.cd-group::before { content: '#'; opacity: 0.55; }
+.cd-group::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.cd-group[hidden] { display: none; }
+.cd-cols + .cd-group { margin-top: 0; }
+
+/* issue list in the meta cell */
+.cd-cell--meta .issue-label { color: var(--red); }
+.cd-cell--meta ul { list-style: none; }
+.cd-cell--meta li { padding: 3px 0 3px 15px; position: relative; font-size: 13.5px; }
+.cd-cell--meta li::before { content: '!'; position: absolute; left: 1px; color: var(--red); font-weight: 700; font-family: var(--font-mono); font-size: 12px; }
+.meta-empty { color: var(--text-dim); font-style: italic; font-size: 13px; }
+
+/* tags */
+.tag {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  padding: 1px 7px; border-radius: 4px; vertical-align: 1px; white-space: nowrap;
+}
+.tag--important { background: var(--red-dim); color: var(--red); }
+
+footer {
+  margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+@media (max-width: 860px) {
+  body { padding: 24px 16px 60px; }
+  .cd-cols { display: none; }
+  .cd-row { grid-template-columns: 1fr; }
+  .cd-cell + .cd-cell { border-left: none; border-top: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark theme"></button>
+
+<div class="page">
+
+  <header>
+    <h1>LiveOps Cadences</h1>
+    <p class="subtitle">Cadence-oriented operating flow: for every cadence, what outcome we want, who owns it, what they do, by when, and the issue that change is expected to fix.</p>
+    <div class="sources">
+      <a class="is-sibling" href="team-scrum-flow-issues.html">Issues &amp; Others</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ TIMELINE ═══════════════════ -->
+  <div class="section-label">Cadence Timeline</div>
+
+  <div class="timeline-card">
+    <div class="timeline-scroll">
+      <div class="tl" role="group" aria-label="LiveOps cadence timeline across one month">
+        <div class="tl-corner"></div>
+        <div class="tl-week tl-week--prev" style="grid-column: 2 / 7">Prev · Jul 27–31</div>
+        <div class="tl-week" style="grid-column: 7 / 12">Week 1 · Aug 3–7</div>
+        <div class="tl-week" style="grid-column: 12 / 17">Week 2 · Aug 10–14</div>
+        <div class="tl-week" style="grid-column: 17 / 22">Week 3 · Aug 17–21</div>
+        <div class="tl-week" style="grid-column: 22 / 27">Week 4 · Aug 24–28</div>
+
+        <div class="tl-day tl-day--prev" style="grid-column: 2">27</div><div class="tl-day tl-day--prev" style="grid-column: 3">28</div><div class="tl-day tl-day--prev" style="grid-column: 4">29</div><div class="tl-day tl-day--prev" style="grid-column: 5">30</div><div class="tl-day tl-day--prev" style="grid-column: 6">31</div>
+        <div class="tl-day" style="grid-column: 7">3</div><div class="tl-day" style="grid-column: 8">4</div><div class="tl-day" style="grid-column: 9">5</div><div class="tl-day" style="grid-column: 10">6</div><div class="tl-day" style="grid-column: 11">7</div>
+        <div class="tl-day" style="grid-column: 12">10</div><div class="tl-day" style="grid-column: 13">11</div><div class="tl-day" style="grid-column: 14">12</div><div class="tl-day" style="grid-column: 15">13</div><div class="tl-day" style="grid-column: 16">14</div>
+        <div class="tl-day" style="grid-column: 17">17</div><div class="tl-day" style="grid-column: 18">18</div><div class="tl-day" style="grid-column: 19">19</div><div class="tl-day" style="grid-column: 20">20</div><div class="tl-day" style="grid-column: 21">21</div>
+        <div class="tl-day" style="grid-column: 22">24</div><div class="tl-day" style="grid-column: 23">25</div><div class="tl-day" style="grid-column: 24">26</div><div class="tl-day" style="grid-column: 25">27</div><div class="tl-day" style="grid-column: 26">28</div>
+
+        <!-- Monthly Planning -->
+        <div class="tl-label" style="grid-row: 3; grid-column: 1">Monthly<br>Planning</div>
+        <div class="tl-lane" style="grid-row: 3">
+          <button class="tl-mark" style="--mk: var(--c-monthly); grid-column: 1" data-cadence="monthly" title="Monthly Planning — Jul 27" aria-label="Monthly Planning, July 27"></button>
+        </div>
+
+        <!-- Sprint bars -->
+        <div class="tl-label" style="grid-row: 4; grid-column: 1">Sprints</div>
+        <div class="tl-lane" style="grid-row: 4">
+          <div class="tl-bar" style="grid-column: 1 / 6; opacity: 0.6">prev sprint</div>
+          <div class="tl-bar tl-bar--s1" style="grid-column: 6 / 16">Sprint 1</div>
+          <div class="tl-bar tl-bar--s2" style="grid-column: 16 / 26">Sprint 2</div>
+        </div>
+
+        <!-- Pre-grooming -->
+        <div class="tl-label" style="grid-row: 5; grid-column: 1">Pre-grooming</div>
+        <div class="tl-lane" style="grid-row: 5">
+          <button class="tl-mark" style="--mk: var(--c-pregroom); grid-column: 3" data-cadence="pregrooming" title="Pre-grooming for Sprint 1 — Jul 29" aria-label="Pre-grooming for Sprint 1, July 29"></button>
+          <button class="tl-mark" style="--mk: var(--c-pregroom); grid-column: 13" data-cadence="pregrooming" title="Pre-grooming for Sprint 2 — Aug 12" aria-label="Pre-grooming for Sprint 2, August 12"></button>
+          <button class="tl-mark" style="--mk: var(--c-pregroom); grid-column: 23" data-cadence="pregrooming" title="Pre-grooming for Sprint 3 — Aug 26" aria-label="Pre-grooming for Sprint 3, August 26"></button>
+        </div>
+
+        <!-- Sprint Grooming -->
+        <div class="tl-label" style="grid-row: 6; grid-column: 1">Sprint<br>Grooming</div>
+        <div class="tl-lane" style="grid-row: 6">
+          <button class="tl-mark" style="--mk: var(--c-groom); grid-column: 4" data-cadence="grooming" title="Grooming for Sprint 1 — Jul 30" aria-label="Sprint Grooming for Sprint 1, July 30"></button>
+          <button class="tl-mark" style="--mk: var(--c-groom); grid-column: 14" data-cadence="grooming" title="Grooming for Sprint 2 — Aug 13" aria-label="Sprint Grooming for Sprint 2, August 13"></button>
+          <button class="tl-mark" style="--mk: var(--c-groom); grid-column: 24" data-cadence="grooming" title="Grooming for Sprint 3 — Aug 27" aria-label="Sprint Grooming for Sprint 3, August 27"></button>
+        </div>
+
+        <!-- Pre-planning -->
+        <div class="tl-label" style="grid-row: 7; grid-column: 1">Pre-planning</div>
+        <div class="tl-lane" style="grid-row: 7">
+          <button class="tl-mark" style="--mk: var(--c-preplan); grid-column: 4" data-cadence="preplanning" title="Pre-planning for Sprint 1 — Jul 30 (same day as Grooming)" aria-label="Pre-planning for Sprint 1, July 30, same day as Grooming"></button>
+          <button class="tl-mark" style="--mk: var(--c-preplan); grid-column: 14" data-cadence="preplanning" title="Pre-planning for Sprint 2 — Aug 13 (same day as Grooming)" aria-label="Pre-planning for Sprint 2, August 13, same day as Grooming"></button>
+          <button class="tl-mark" style="--mk: var(--c-preplan); grid-column: 24" data-cadence="preplanning" title="Pre-planning for Sprint 3 — Aug 27 (same day as Grooming)" aria-label="Pre-planning for Sprint 3, August 27, same day as Grooming"></button>
+        </div>
+
+        <!-- Sprint Review / Retro -->
+        <div class="tl-label" style="grid-row: 8; grid-column: 1">Sprint Review<br>/ Retro</div>
+        <div class="tl-lane" style="grid-row: 8">
+          <button class="tl-mark" style="--mk: var(--c-review); grid-column: 5" data-cadence="review" title="Prev sprint Review / Retro — Jul 31 (same day as Planning)" aria-label="Previous sprint Review and Retro, July 31, same day as Sprint Planning"></button>
+          <button class="tl-mark" style="--mk: var(--c-review); grid-column: 15" data-cadence="review" title="Sprint 1 Review / Retro — Aug 14 (same day as Planning)" aria-label="Sprint 1 Review and Retro, August 14, same day as Sprint Planning"></button>
+          <button class="tl-mark" style="--mk: var(--c-review); grid-column: 25" data-cadence="review" title="Sprint 2 Review / Retro — Aug 28 (same day as Planning)" aria-label="Sprint 2 Review and Retro, August 28, same day as Sprint Planning"></button>
+        </div>
+
+        <!-- Sprint Planning -->
+        <div class="tl-label" style="grid-row: 9; grid-column: 1">Sprint<br>Planning</div>
+        <div class="tl-lane" style="grid-row: 9">
+          <button class="tl-mark" style="--mk: var(--c-plan); grid-column: 5" data-cadence="planning" title="Sprint 1 Planning — Jul 31" aria-label="Sprint 1 Planning, July 31"></button>
+          <button class="tl-mark" style="--mk: var(--c-plan); grid-column: 15" data-cadence="planning" title="Sprint 2 Planning — Aug 14" aria-label="Sprint 2 Planning, August 14"></button>
+          <button class="tl-mark" style="--mk: var(--c-plan); grid-column: 25" data-cadence="planning" title="Sprint 3 Planning — Aug 28" aria-label="Sprint 3 Planning, August 28"></button>
+        </div>
+
+        <!-- Weekly Product -->
+        <div class="tl-label" style="grid-row: 10; grid-column: 1">Weekly<br>Product</div>
+        <div class="tl-lane" style="grid-row: 10">
+          <button class="tl-mark" style="--mk: var(--c-weekly); grid-column: 8" data-cadence="weekly" title="Weekly Product — Aug 4" aria-label="Weekly Product, August 4"></button>
+          <button class="tl-mark" style="--mk: var(--c-weekly); grid-column: 13" data-cadence="weekly" title="Weekly Product — Aug 11" aria-label="Weekly Product, August 11"></button>
+          <button class="tl-mark" style="--mk: var(--c-weekly); grid-column: 18" data-cadence="weekly" title="Weekly Product — Aug 18" aria-label="Weekly Product, August 18"></button>
+          <button class="tl-mark" style="--mk: var(--c-weekly); grid-column: 23" data-cadence="weekly" title="Weekly Product — Aug 25" aria-label="Weekly Product, August 25"></button>
+        </div>
+
+        <!-- Daily -->
+        <div class="tl-label" style="grid-row: 11; grid-column: 1">Daily Scrum</div>
+        <div class="tl-lane" style="grid-row: 11">
+          <button class="tl-bar tl-bar--daily" style="grid-column: 1 / 26; cursor: pointer; border: 1px dashed var(--border-bright); width: 100%;" data-cadence="daily" title="Daily Scrum — every working day" aria-label="Daily Scrum, every working day">every working day</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pill-row" role="tablist" aria-label="Cadence selector">
+      <button class="pill" style="--mk: var(--c-monthly)" data-cadence="monthly">Monthly Planning</button>
+      <button class="pill" style="--mk: var(--c-pregroom)" data-cadence="pregrooming">Pre-grooming</button>
+      <button class="pill" style="--mk: var(--c-groom)" data-cadence="grooming">Sprint Grooming</button>
+      <button class="pill" style="--mk: var(--c-preplan)" data-cadence="preplanning">Pre-planning</button>
+      <button class="pill" style="--mk: var(--c-review)" data-cadence="review">Sprint Review / Retro</button>
+      <button class="pill" style="--mk: var(--c-plan)" data-cadence="planning">Sprint Planning</button>
+      <button class="pill" style="--mk: var(--c-daily)" data-cadence="daily">Daily Scrum</button>
+      <button class="pill" style="--mk: var(--c-weekly)" data-cadence="weekly">Weekly Product</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CADENCE DETAILS ═══════════════════ -->
+  <div class="section-label" id="detail-anchor">Cadence Detail
+    <small>· pick a cadence above, then filter by role</small>
+  </div>
+
+  <!-- ── Monthly Planning ── -->
+  <section class="cadence-detail" id="cd-monthly" style="--mk: var(--c-monthly)">
+    <div class="cd-head">
+      <h2>Monthly Planning</h2>
+      <span class="cd-meta"><b>Monthly</b> · last week of the previous month</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Head of LiveOps</b></span>
+        <span>Contributor: <b>PO</b></span>
+        <span><a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-8654/8cn65xb-156854" target="_blank" rel="noopener">Ref ↗</a></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">1 week before</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Well-reviewed backlog with backup insights</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li><strong>Discovery / Review:</strong> playtest, market, user review, UAT, previous learning, etc.</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Include internal playtest</li><li>Refine weekly</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Foresee roadmap ahead to see whether we need adjust</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li><strong>Roadmap Planning:</strong> refine your roadmap for 2 months ahead</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>To plan the goals &amp; resources for next month</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li><strong>Goals:</strong> breakdown your detailed goals for next month and add into next 2 sprints</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>If we did here well, the Sprint Planning would be better</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Make sure we well plan the resources (utilize / borrow)</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li><strong>Resources:</strong> DEV, ART, MO, PORT, etc.</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul>
+          <li>If we did here well, the Sprint Planning would be better</li>
+          <li>Should back to previous Squad mode to focus and better allocation</li>
+        </ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Do next cycle better</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li><strong>Retro:</strong> what's wrong / can be better, root causes, resolution</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-group">During Pre-read</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Aware about other pillars' plan</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Submit, pre-read and comment for each other</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>More proactive comments</li></ul></div>
+    </div>
+
+    <div class="cd-group">During</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Feedback loop</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Recap &amp; go through each other's comments</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Pre-read</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="head">
+      <div class="cd-cell cd-cell--out"><p>Align monthly goals &amp; resources</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Roughly estimate goals &amp; resources for 2 sprints of that month</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>If we did here well, the Sprint Planning would be better</li></ul></div>
+    </div>
+
+    <div class="cd-group">After MNGT consolidation</div>
+    <div class="cd-row" data-roles="head">
+      <div class="cd-cell cd-cell--out"><p>Inform for the whole team including Scrum, Creative, UA</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Announce on <code>#liveops-announcement</code></li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+  </section>
+
+  <!-- ── Pre-grooming ── -->
+  <section class="cadence-detail" id="cd-pregrooming" style="--mk: var(--c-pregroom)">
+    <div class="cd-head">
+      <h2>Pre-grooming</h2>
+      <span class="cd-meta"><b>Once per sprint</b> · 1 day before Sprint Grooming</span>
+      <div class="cd-roles">
+        <span>Driver: <b>PO</b></span>
+        <span>Contributor: <b>Unity Lead, DEV, QC</b></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">1 day before Sprint grooming</div>
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>DEV know their focus next sprint</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Roughly allocate sprint goals for DEV</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>DEV spend more focus and time to research</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po dev qc">
+      <div class="cd-cell cd-cell--out"><p>Have time to pre-read, consume, think, comment</p></div>
+      <div class="cd-cell cd-cell--do"><div class="do-owner" data-owner="po">
+          <ul>
+            <li>Submit goals &amp; PRD — PRD Template: <a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-8654/8cn65xb-54954" target="_blank" rel="noopener">template ↗</a>. <strong>PO strictly follow or get scars.</strong></li>
+          </ul></div>
+        <div class="do-owner" data-owner="dev qc">
+          <ul>
+            <li>Pre-read &amp; comment for goals &amp; PRD, key questions suggested:
+              <ul>
+                <li><strong>Insights:</strong> why we have that goal?</li>
+                <li><strong>Hypothesis &amp; User journey:</strong> what expected hypothesis we want to validate and experience we want to create?</li>
+                <li><strong>Quality of design:</strong> anything missing, fall under standard, causing confusion, etc.</li>
+                <li><strong>Technical questions:</strong> feasibility, scope, risks, tracking, etc.</li>
+              </ul>
+            </li>
+          </ul></div></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Expect shorter meeting time since everyone have read, commented and can focus on discussion</li></ul></div>
+    </div>
+
+  </section>
+
+  <!-- ── Sprint Grooming ── -->
+  <section class="cadence-detail" id="cd-grooming" style="--mk: var(--c-groom)">
+    <div class="cd-head">
+      <h2>Sprint Grooming</h2>
+      <span class="cd-meta"><b>Once per sprint</b> · 1 day after Pre-grooming · same day as Pre-planning</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Unity Lead</b></span>
+        <span>Contributor: <b>PO, DEV, QC</b></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">During</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Feedback loop</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Recap the goals &amp; design &amp; definition of done or acceptance criteria</li>
+          <li>Clarify comments</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Clarify everything</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Address all questions and concerns raised by DEV and QC, and update the documentation accordingly when necessary</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">&mdash;</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="dev">
+      <div class="cd-cell cd-cell--out"><p>Ensure the requirements &amp; finalize the estimate</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Clarify requirements in as much detail as possible and proactively cover edge cases, so DEV don&rsquo;t have to make assumptions</li>
+          <li>Requirements should be clear enough for DEV to understand the implementation approach and visualize the expected final outcome</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">&mdash;</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="qc">
+      <div class="cd-cell cd-cell--out"><p>Clarify everything</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Read and understand the documentation thoroughly:
+            <ul>
+              <li>Can you clearly visualize how the feature is supposed to work?</li>
+              <li>Are all the necessary conditions and resources available to test the feature?</li>
+              <li>Do you understand how the feature should be tested, including the expected results and potential edge cases?</li>
+            </ul>
+          </li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">&mdash;</p></div>
+    </div>
+  </section>
+
+  <!-- ── Pre-planning ── -->
+  <section class="cadence-detail" id="cd-preplanning" style="--mk: var(--c-preplan)">
+    <div class="cd-head">
+      <h2>Pre-planning</h2>
+      <span class="cd-meta"><b>Once per sprint</b> · same day as Grooming · 1 day before Planning</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Unity Lead</b></span>
+        <span>Contributor: <b>DEV</b></span>
+      </div>
+      <p class="cd-purpose">New cadence — the bottoms-up estimation step that stops estimation leaking into Review / Planning.</p>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">Before Planning</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Polished PRD</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Finalize PRD, escalate more with assigned DEV if needed</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>PO &amp; DEV must clear definition of done, acceptance criteria</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="dev">
+      <div class="cd-cell cd-cell--out"><p>Bottoms up from DEV</p>
+        <ul>
+          <li>risks, blockers, etc.</li>
+          <li>checklist</li>
+          <li>estimation</li>
+          <li>timeline</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Review PRD, code, etc. and follow up with PO to raise any risks, blockers, concerns, etc.</li>
+          <li>Breakdown implementation checklists and input estimation.
+            <ul>
+              <li><span class="tag tag--important">Important</span> if a task is more than 8h, it must be broken into items of minimum 4h or 8h</li>
+              <li>Include a separate item called <strong>Verify</strong>, buffered for fixing bugs</li>
+            </ul>
+          </li>
+          <li>Input the temporary Due date (DEV / DONE)</li>
+          <li>Plan your non-scrum time (day-off, meeting, learning, company event, fixed team meetings, planning, personal plan, review code, learning time)</li>
+          <li>Buffer adhoc issues (investigate issues)</li>
+          <li>Assign &amp; buffer main branch merger</li>
+          <li>Submit your plan to PO, Unity Lead</li>
+          <li>PO, Unity Lead review (any mis-understanding, mis-estimation, etc.), escalate tasks that lack resources</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Most DEV mis-estimation root causes</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ── Sprint Review / Retro ── -->
+  <section class="cadence-detail" id="cd-review" style="--mk: var(--c-review)">
+    <div class="cd-head">
+      <h2>Sprint Review / Retro</h2>
+      <span class="cd-meta"><b>Once per sprint</b> · same day as Sprint Planning</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Unity Lead</b></span>
+        <span>Contributor: <b>DEV, QC, PO</b></span>
+        <span><a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-97094/8cn65xb-229054" target="_blank" rel="noopener">Ref ↗</a></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">Before Pre-read</div>
+    <div class="cd-row" data-roles="dev">
+      <div class="cd-cell cd-cell--out"><p>Goal review &amp; retro</p></div>
+      <div class="cd-cell cd-cell--do"><div class="do-owner"><div class="do-owner__label">Review</div>
+          <ul>
+            <li>Unity Lead move un-finished tasks to next sprint (PO review)</li>
+            <li>DEV add un-finished tasks to next sprint</li>
+            <li>Were they delivered on estimate (time log / estimate), on time (due date) and with good quality?</li>
+          </ul></div>
+        <div class="do-owner"><div class="do-owner__label">Retro</div>
+          <ul><li>What should we do to do faster and with higher quality?</li></ul></div></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul>
+          <li>DEV take full ownership &amp; operation with Task Review</li>
+          <li>Go 1 more level — suggestion</li>
+        </ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="qc">
+      <div class="cd-cell cd-cell--out"><p>Quality review &amp; retro</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Bugs previous sprint</li>
+          <li>What's the pattern (UI issue, missing compared with PRD, etc.)</li>
+          <li>What could be prevented in DEV state instead of QC (self-test UI, check PRD, etc.)</li>
+          <li>Please use Slack Retro reaction to log raw issues to review later</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Expect to cover the repeated patterns</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Cadences review</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Review all of our cadences (Grooming, Pre-planning, Planning, Daily, etc.)</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Fix the system, not the fragmented issues</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Other issues</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Go through Retro List in Slack</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Team must actively use the reaction</li></ul></div>
+    </div>
+
+    <div class="cd-group">During Pre-read</div>
+    <div class="cd-row" data-roles="team">
+      <div class="cd-cell cd-cell--out"><p>Have time to pre-read, consume, think, comment</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Pre-read &amp; comment</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Expect shorter meeting time since everyone have read, commented and can focus on discussion</li></ul></div>
+    </div>
+
+    <div class="cd-group">During Review / Retro</div>
+    <div class="cd-row" data-roles="team po">
+      <div class="cd-cell cd-cell--out"><p>Feedback loop</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Go through to discuss and clarify</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-group">After</div>
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Actionable</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Plan actions to resolve</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul>
+          <li>Add to 1-1 with Head of LiveOps</li>
+          <li>Add to Retro session</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- ── Sprint Planning ── -->
+  <section class="cadence-detail" id="cd-planning" style="--mk: var(--c-plan)">
+    <div class="cd-head">
+      <h2>Sprint Planning</h2>
+      <span class="cd-meta"><b>Once per sprint</b> · sprint boundary · same day as Review / Retro</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Unity Lead</b></span>
+        <span>Contributor: <b>DEV, QC, PO</b></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">During</div>
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Refine issues &amp; finalize the sprint goals &amp; allocation</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Go through any issues with planning: tasks that lack resources, risks, concerns, etc.</li>
+          <li>Recap sprint goals &amp; allocation</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Expect shorter meeting time since everyone have read, commented and can focus on discussion</li></ul></div>
+    </div>
+
+    <div class="cd-group">After</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Clear release calendar &amp; candidate</p></div>
+      <div class="cd-cell cd-cell--do"><div class="do-owner" data-owner="po">
+          <ul>
+            <li>Consolidate release candidate based on DEV estimation</li>
+            <li>Consolidate with PO Ops if any adjustment needed (update icon, assets, etc.)</li>
+          </ul></div></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Polish this, together with better estimation, will cause less refinement during sprint</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="qc">
+      <div class="cd-cell cd-cell--out"><p>Allocate QC resource</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Assign main QC for each task</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+  </section>
+
+  <!-- ── Daily Scrum ── -->
+  <section class="cadence-detail" id="cd-daily" style="--mk: var(--c-daily)">
+    <div class="cd-head">
+      <h2>Daily Scrum</h2>
+      <span class="cd-meta"><b>Daily</b> · every working day</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Unity Lead</b></span>
+        <span>Contributor: <b>DEV, QC, PO</b></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">During</div>
+    <div class="cd-row" data-roles="dev">
+      <div class="cd-cell cd-cell--out"><p>Ensure DEV progress toward sprint goals</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Backward-plan from committed due date (Ticket – Due – Rate – On/Off track – Next steps)</li>
+          <li>Flag uncommittable upcoming tasks</li>
+          <li>In-queue QC tasks that need progressed so it can be on time</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Align with QC</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="qc">
+      <div class="cd-cell cd-cell--out"><p>Ensure QC resources</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>QC testing queue or align adjustments if needed</li>
+          <li>Release candidate that day</li>
+          <li>In-queue tasks that need progressed so it can be on time</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Align with QC</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Ensure release candidate</p></div>
+      <div class="cd-cell cd-cell--do"><ul>
+          <li>Check release calendar; pivot if needed (cutoff / split)</li>
+          <li>Check Blockers list</li>
+        </ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Align with QC</li></ul></div>
+    </div>
+
+    <div class="cd-group">After</div>
+    <div class="cd-row" data-roles="team">
+      <div class="cd-cell cd-cell--out"><p>Follow up discussions</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Follow up issues raised during Daily</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Unity Lead facilitate</li></ul></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Ensure ART progress</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Check with ART in Daily Slack</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <ul><li>Must check &amp; refine if needed</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ── Weekly Product ── -->
+  <section class="cadence-detail" id="cd-weekly" style="--mk: var(--c-weekly)">
+    <div class="cd-head">
+      <h2>Weekly Product</h2>
+      <span class="cd-meta"><b>Weekly</b> · once a week</span>
+      <div class="cd-roles">
+        <span>Driver: <b>Head of LiveOps</b></span>
+        <span>Contributor: <b>PO, Unity Lead</b></span>
+        <span><a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-103434/8cn65xb-246454" target="_blank" rel="noopener">Ref 1 ↗</a></span>
+        <span><a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-103434/8cn65xb-246474" target="_blank" rel="noopener">Ref 2 ↗</a></span>
+      </div>
+    </div>
+
+    <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
+
+    <div class="cd-group">Before</div>
+    <div class="cd-row" data-roles="team">
+      <div class="cd-cell cd-cell--out"><p>Have time to pre-read, consume, think, comment</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Pre-read &amp; comment</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-group">During</div>
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Shared visibility on progress &amp; test status</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Progress update on ongoing features / pillars</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Tech performance</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Report tech metrics (crash rate, performance, build stability)</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">—</p></div>
+    </div>
+  </section>
+
+  <footer>LiveOps Cadences </footer>
+
+</div>
+
+<script>
+(function () {
+  var toggle = document.getElementById('themeToggle');
+  var saved = localStorage.getItem('theme');
+  var initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (saved) document.documentElement.setAttribute('data-theme', initial);
+  toggle.textContent = initial === 'dark' ? '☀' : '☾';
+  toggle.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme')
+      || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggle.textContent = next === 'dark' ? '☀' : '☾';
+  });
+})();
+
+(function () {
+  var triggers = document.querySelectorAll('[data-cadence]');
+  var panels = document.querySelectorAll('.cadence-detail');
+
+  var ROLES = {
+    po:   'PO',
+    dev:  'DEV',
+    qc:   'QC',
+    lead: 'Unity Lead',
+    head: 'Head of LiveOps'
+  };
+  // Team gets no tab of its own; team-wide work belongs to every role.
+  var ORDER = ['po', 'dev', 'qc', 'lead', 'head'];
+  var role = ''; // sticky across cadences so "what do I do" survives switching
+
+  function keys(el, attr) {
+    return (el.dataset[attr] || '').split(/\s+/).filter(Boolean);
+  }
+
+  // A row belongs to a role when it names it. Team-wide rows are everyone's
+  // work, so they also surface under each individual role.
+  function rowMatches(row, r) {
+    var rs = keys(row, 'roles');
+    return rs.indexOf(r) > -1 || rs.indexOf('team') > -1;
+  }
+
+  // The sticky role when this cadence has it, otherwise that cadence's first tab.
+  function roleFor(panel) {
+    if (role && panel.querySelector('.role-tab[data-role="' + role + '"]')) return role;
+    var first = panel.querySelector('.role-tab');
+    return first ? first.dataset.role : '';
+  }
+
+  function applyRole(panel, r) {
+    panel.querySelectorAll('.cd-row').forEach(function (row) {
+      row.hidden = !rowMatches(row, r);
+
+      var groups = row.querySelectorAll('.do-owner[data-owner]');
+      if (row.hidden) { // nothing to filter; reset so the row is clean when it returns
+        groups.forEach(function (g) { g.hidden = false; });
+      } else {
+        // within a visible row, drop the step groups owned by other roles
+        groups.forEach(function (g) {
+          var owners = keys(g, 'owner');
+          g.hidden = owners.indexOf(r) === -1 && owners.indexOf('team') === -1;
+        });
+        if (groups.length && ![].some.call(groups, function (g) { return !g.hidden; })) {
+          groups.forEach(function (g) { g.hidden = false; }); // never blank out a matching row
+        }
+      }
+      var shown = [].filter.call(row.querySelectorAll('.do-owner'), function (g) { return !g.hidden; });
+      row.querySelectorAll('.do-owner').forEach(function (g) { g.classList.remove('is-first'); });
+      if (shown.length) shown[0].classList.add('is-first');
+    });
+
+    // a time-marker header survives only while a row under it is still visible
+    panel.querySelectorAll('.cd-group').forEach(function (h) {
+      var alive = false;
+      for (var n = h.nextElementSibling; n && !n.classList.contains('cd-group'); n = n.nextElementSibling) {
+        if (n.classList.contains('cd-row') && !n.hidden) { alive = true; break; }
+      }
+      h.hidden = !alive;
+    });
+
+    panel.querySelectorAll('.role-tab').forEach(function (t) {
+      var on = t.dataset.role === r;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  // Build one tab bar per cadence, listing only the roles that cadence involves.
+  panels.forEach(function (panel) {
+    var rows = [].slice.call(panel.querySelectorAll('.cd-row'));
+    var present = [], hasTeam = false;
+    rows.forEach(function (row) {
+      keys(row, 'roles').forEach(function (k) {
+        if (k === 'team') { hasTeam = true; return; }
+        if (present.indexOf(k) === -1) present.push(k);
+      });
+    });
+    present.sort(function (a, b) { return ORDER.indexOf(a) - ORDER.indexOf(b); });
+    if (!present.length) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'role-tabs';
+    bar.setAttribute('role', 'tablist');
+    bar.setAttribute('aria-label', 'Filter this cadence by role');
+
+    present.forEach(function (k) {
+      var count = rows.filter(function (row) { return rowMatches(row, k); }).length;
+      var tab = document.createElement('button');
+      tab.className = 'role-tab role-tab--' + k;
+      tab.dataset.role = k;
+      tab.setAttribute('role', 'tab');
+      tab.innerHTML = ROLES[k] + ' <span class="n">' + count + '</span>';
+      tab.addEventListener('click', function () {
+        role = k;
+        panels.forEach(function (p) { applyRole(p, roleFor(p)); });
+      });
+      bar.appendChild(tab);
+    });
+
+    if (hasTeam) {
+      var hint = document.createElement('span');
+      hint.className = 'role-hint';
+      hint.textContent = 'Team-wide rows show under every role';
+      bar.appendChild(hint);
+    }
+
+    panel.insertBefore(bar, panel.querySelector('.cd-cols'));
+    applyRole(panel, present[0]);
+  });
+
+  function select(id, scroll) {
+    panels.forEach(function (p) { p.classList.toggle('is-open', p.id === 'cd-' + id); });
+    triggers.forEach(function (t) {
+      var on = t.dataset.cadence === id;
+      t.classList.toggle('is-active', on);
+      if (t.classList.contains('pill')) t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    var panel = document.getElementById('cd-' + id);
+    if (panel) {
+      applyRole(panel, roleFor(panel));
+      if (scroll) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  triggers.forEach(function (t) {
+    t.addEventListener('click', function () { select(t.dataset.cadence, true); });
+  });
+
+  select('monthly', false); // default open so the page never looks empty
+})();
+</script>
+
+</body>
+</html>

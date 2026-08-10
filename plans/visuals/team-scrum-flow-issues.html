@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveOps Cadences — Issues &amp; Others (Aug 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ───────────────────────── Theme: Editorial (navy + gold) ───────────────────────── */
+/* Self-contained by design: these pages are uploaded to ClickUp as standalone attachments. */
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --bg: #faf8f2;
+  --surface: #ffffff;
+  --surface2: #f5f0e6;
+  --border: rgba(30, 30, 50, 0.09);
+  --border-bright: rgba(30, 30, 50, 0.18);
+  --text: #1a1814;
+  --text-dim: #7a7468;
+  --text-bright: #0f0d0a;
+  --accent: #b8860b;
+  --accent-dim: rgba(184, 134, 11, 0.08);
+
+  --red: #b91c1c;   --red-dim: rgba(185, 28, 28, 0.07);
+  --amber: #b45309; --amber-dim: rgba(180, 83, 9, 0.08);
+  --green: #4d7c0f; --green-dim: rgba(77, 124, 15, 0.08);
+  --blue: #34518a;  --blue-dim: rgba(52, 81, 138, 0.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1729;
+    --surface: #162040;
+    --surface2: #1a2547;
+    --border: rgba(200, 180, 140, 0.10);
+    --border-bright: rgba(200, 180, 140, 0.22);
+    --text: #e8e4d8;
+    --text-dim: #9a9484;
+    --text-bright: #f7f4ea;
+    --accent: #d4a73a;
+    --accent-dim: rgba(212, 167, 58, 0.12);
+
+    --red: #fca5a5;   --red-dim: rgba(252, 165, 165, 0.10);
+    --amber: #fbbf24; --amber-dim: rgba(251, 191, 36, 0.10);
+    --green: #a3e635; --green-dim: rgba(163, 230, 53, 0.10);
+    --blue: #8fb3e8;  --blue-dim: rgba(143, 179, 232, 0.10);
+  }
+}
+[data-theme="dark"] {
+  --bg: #0f1729;
+  --surface: #162040;
+  --surface2: #1a2547;
+  --border: rgba(200, 180, 140, 0.10);
+  --border-bright: rgba(200, 180, 140, 0.22);
+  --text: #e8e4d8;
+  --text-dim: #9a9484;
+  --text-bright: #f7f4ea;
+  --accent: #d4a73a;
+  --accent-dim: rgba(212, 167, 58, 0.12);
+
+  --red: #fca5a5;   --red-dim: rgba(252, 165, 165, 0.10);
+  --amber: #fbbf24; --amber-dim: rgba(251, 191, 36, 0.10);
+  --green: #a3e635; --green-dim: rgba(163, 230, 53, 0.10);
+  --blue: #8fb3e8;  --blue-dim: rgba(143, 179, 232, 0.10);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, var(--accent-dim) 0%, transparent 55%);
+  padding: 48px 32px 80px;
+  overflow-wrap: break-word;
+}
+.page { max-width: 1100px; margin: 0 auto; }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text-bright);
+  letter-spacing: -0.5px;
+}
+h1 em { color: var(--accent); font-style: italic; }
+.subtitle { color: var(--text-dim); margin-top: 10px; max-width: 68ch; font-size: 16px; }
+
+a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+
+/* nav / source links */
+.sources {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 11.5px;
+}
+.sources a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-dim); text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.sources a::before { content: '↗'; color: var(--accent); }
+.sources a:hover { color: var(--text); border-color: var(--border-bright); }
+.sources a.is-sibling { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); background: var(--accent-dim); font-weight: 600; }
+.sources a.is-sibling::before { content: '←'; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 56px 0 18px;
+}
+.section-label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-bright); }
+.section-label small { color: var(--text-dim); font-weight: 400; letter-spacing: 1px; text-transform: none; }
+
+/* ───────────────────────── Theme toggle ───────────────────────── */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 300;
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-dim);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: background 0.15s, color 0.15s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.theme-toggle:hover { background: var(--surface2); color: var(--text); }
+
+/* ───────────────────────── Problem → root cause → fix blocks ───────────────────────── */
+.issue-block {
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); overflow: hidden; margin-bottom: 12px;
+}
+.issue-block__head {
+  padding: 12px 18px; border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--red) 5%, var(--surface));
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px;
+}
+.issue-block__head h3 { font-size: 15.5px; font-weight: 600; color: var(--text-bright); }
+.issue-block__head .count { font-family: var(--font-mono); font-size: 10.5px; color: var(--red); letter-spacing: 1px; text-transform: uppercase; }
+.rc-row { display: grid; grid-template-columns: 1fr 1.15fr; }
+.rc-row + .rc-row { border-top: 1px solid var(--border); }
+.rc-row > * { min-width: 0; padding: 12px 18px; }
+.rc-row > * + * { border-left: 1px solid var(--border); }
+.rc-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.rc-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.rc-cause .rc-label { color: var(--amber); }
+.rc-fix .rc-label { color: var(--green); }
+.rc-row p { font-size: 14px; }
+.rc-row ul { list-style: none; }
+.rc-row li { padding: 3px 0 3px 15px; position: relative; font-size: 14px; }
+.rc-fix li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 600; font-size: 12px; }
+.rc-cause li::before { content: '•'; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.driver-chip {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  padding: 3px 9px; border-radius: 5px; white-space: nowrap;
+  color: var(--blue); background: var(--blue-dim); border: 1px solid currentColor;
+  margin-left: auto;
+}
+
+/* note callout */
+.callout {
+  padding: 16px 20px; border-radius: 10px; margin-bottom: 18px;
+  border-left: 4px solid var(--accent); background: var(--accent-dim);
+  font-size: 14.5px;
+}
+.callout__title { font-weight: 600; color: var(--accent); margin-bottom: 6px; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+footer {
+  margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+@media (max-width: 860px) {
+  body { padding: 24px 16px 60px; }
+  .rc-row { grid-template-columns: 1fr; }
+  .rc-row > * + * { border-left: none; border-top: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark theme"></button>
+
+<div class="page">
+
+  <header>
+    <h1>Issues &amp; <em>Others</em></h1>
+    <p class="subtitle">The repeated problems behind the Aug 2026 cadence changes — each traced to its root causes and the fix we committed to. Companion to the cadence flow page.</p>
+    <div class="sources">
+      <a class="is-sibling" href="team-scrum-flow-review.html">Cadence flow — Aug 2026</a>
+      <a href="https://docs.google.com/document/d/1LvooC-cc9fBpsi1jdchP9rX9CKxrzVXW/edit" target="_blank" rel="noopener">Google Doc</a>
+      <a href="https://app.clickup.com/9014810539/docs/8cn65xb-97094/8cn65xb-229054" target="_blank" rel="noopener">Retro</a>
+      <a href="https://app.clickup.com/9014810539/docs/8cn65xb-8654/8cn65xb-202174" target="_blank" rel="noopener">Cadences Review — May 2026</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ ISSUES-ORIENTED ═══════════════════ -->
+  <div class="section-label">Issues-oriented <small>· repeated ones · problem → root cause → fix</small></div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Grooming estimation ineffective</h3><span class="count">6 root causes</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>PO docs / description / acceptance criteria not finalized</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>PO submits PRD with strict template</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Dev hasn't pre-read requirements</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Pre-read slot to read and comment (with suggested questions added)</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Dev lacks an estimation method, can't anticipate timeline time (QC test, merge review, build, day-off, assets-ready)</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>Pre-read slot to read and roughly research</li>
+        <li>Pre-planning to better review &amp; estimate</li>
+        <li>Add estimation guideline (task breakdown into &lt;4h item checklist, etc.)</li>
+      </ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Task outside dev's known knowledge</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>Pre-read slot to read and roughly research</li>
+        <li>Pre-planning to better review &amp; estimate</li>
+      </ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Asset wait-time not estimated</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Pre-planning to better review &amp; estimate</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Session too short to absorb without prep</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Pre-read slot to read and comment (with suggested questions added)</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>POs don't dig into tech implications and risks while writing docs</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Sprint Grooming (technical questions)</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Dev not focused while PO presents</h3><span class="count">2 root causes</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Dev still heads-down on current sprint tasks</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Consequence of wrong estimation &amp; capacity → Unity Lead to review</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>PO presentation is too long, many content can be pre-read</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Pre-read slot to read and roughly research</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Estimation still happening in Review / Planning</h3><span class="count">1 root cause</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Estimation in the prior cadence was incomplete / didn't stick</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Pre-planning cadence</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Previous sprint not reviewed seriously</h3><span class="count">3 root causes</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>PO bulk-moves all prev-sprint tasks in → can't isolate trailed tasks</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>DEV take full ownership &amp; operation with Task Review</li>
+        <li>Go 1 more level — suggestion</li>
+      </ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Not going thoroughly enough to root causes, pattern to fix</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>DEV, QC must input bugs (by goal, or general) previous sprint</li>
+        <li>What's the pattern (UI issue, missing compared with PRD, etc.)</li>
+        <li>What could be prevented in DEV state instead of QC (self-test UI, check PRD, etc.)</li>
+        <li>Please use Slack Retro reaction to log raw issues to review later</li>
+      </ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>QC can't test the instant status hits "To Verify"</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Align &amp; refine in Daily</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Daily standup too long</h3><span class="count">~40 min × 10 ≈ +4h / day</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>People deep-dive technical issues live</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Daily Scrum (follow-ups moved to After Daily)</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Build composition calculated during the call</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Sprint Planning (PO consolidates release candidate)</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Logistics: room too small; tired &amp; unfocused by end</h3><span class="count">2 root causes</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Room too small for the attendee count</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Move to L6 when it's ready</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>No breaks in long cadences</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>5-m break every 1–1.5h</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Adhoc tasks &amp; popup bugs derail the sprint goal</h3><span class="count">1 root cause</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Projects run &amp; build in parallel continuously → critical interrupts</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Must collect to analyze the pattern</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ OTHERS ═══════════════════ -->
+  <div class="section-label">Others <small>· problem → root cause → fix → driver</small></div>
+
+  <div class="callout">
+    <div class="callout__title">Note</div>
+    The first two entries also appear above under Issues-oriented. They are repeated here as in the source doc, with an explicit driver assigned.
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Logistics: room too small; tired &amp; unfocused by end</h3><span class="driver-chip">Facilitator</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Room too small for the attendee count</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Move to L6 when it's ready</li></ul></div>
+    </div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>No breaks in long cadences</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>5-m break every 1–1.5h</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Adhoc tasks &amp; popup bugs derail the sprint goal</h3><span class="driver-chip">Unity Lead</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>Projects run &amp; build in parallel continuously → critical interrupts</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul><li>Unity Lead must collect to analyze the pattern</li></ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Technical retro</h3><span class="driver-chip">Unity Lead</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><p>The mindset and technical skills can't be discussed within the Retro with the whole team, since not all members have enough time, context and technical knowledge to understand</p></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>Include in Unity Sharing</li>
+        <li>Unity Lead to monitor &amp; raise standard</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-block__head"><h3>Assumption causing wrong implementation</h3><span class="driver-chip">Unity Lead</span></div>
+    <div class="rc-row">
+      <div class="rc-cause"><div class="rc-label">Root cause</div><ul>
+        <li>DEV hesitate to ask</li>
+        <li>DEV don't understand or critically think why it's required to implement that way</li>
+        <li>DEV share specific ambiguous requirements from PO</li>
+      </ul></div>
+      <div class="rc-fix"><div class="rc-label">Fix</div><ul>
+        <li>DEV must ask</li>
+        <li>DEV must understand, ask during Grooming</li>
+        <li>PO must use clear definition, if possible use the technical terms (event, comparison terms, etc.)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <footer>LiveOps Cadences · Aug 2026 · Issues &amp; Others · source: LiveOps Cadences - Aug 2026 (Google Doc)</footer>
+
+</div>
+
+<script>
+(function () {
+  var toggle = document.getElementById('themeToggle');
+  var saved = localStorage.getItem('theme');
+  var initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (saved) document.documentElement.setAttribute('data-theme', initial);
+  toggle.textContent = initial === 'dark' ? '☀' : '☾';
+  toggle.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme')
+      || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggle.textContent = next === 'dark' ? '☀' : '☾';
+  });
+})();
+</script>
+
+</body>
+</html>

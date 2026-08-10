@@ -1,0 +1,8 @@
+# Internal standup notes — name individual team members, kept out of the public repo
+plans/reports/
+
+# Local tooling
+.claude/
+
+# macOS
+.DS_Store
