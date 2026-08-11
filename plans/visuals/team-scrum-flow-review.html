@@ -440,7 +440,7 @@ footer {
   </header>
 
   <!-- ═══════════════════ TIMELINE ═══════════════════ -->
-  <div class="section-label">Cadence Timeline</div>
+  <div class="section-label">Cadence Timeline (Example)</div>
 
   <div class="timeline-card">
     <div class="timeline-scroll">
@@ -655,7 +655,7 @@ footer {
 
     <div class="cd-group">1 day before Sprint grooming</div>
     <div class="cd-row" data-roles="lead">
-      <div class="cd-cell cd-cell--out"><p>DEV know their focus next sprint</p></div>
+      <div class="cd-cell cd-cell--out"><p>DEVs known their focus next sprint</p></div>
       <div class="cd-cell cd-cell--do"><ul><li>Roughly allocate sprint goals for DEV</li></ul></div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
@@ -663,7 +663,7 @@ footer {
     </div>
 
     <div class="cd-row" data-roles="po dev qc">
-      <div class="cd-cell cd-cell--out"><p>Have time to pre-read, consume, think, comment</p></div>
+      <div class="cd-cell cd-cell--out"><p>Goals &amp; Detail descriptions for the next sprint</p></div>
       <div class="cd-cell cd-cell--do"><div class="do-owner" data-owner="po">
           <ul>
             <li>Submit goals &amp; PRD — PRD Template: <a href="https://app.clickup.com/9014810539/v/dc/8cn65xb-8654/8cn65xb-54954" target="_blank" rel="noopener">template ↗</a>. <strong>PO strictly follow or get scars.</strong></li>
@@ -738,8 +738,10 @@ footer {
               <li>Can you clearly visualize how the feature is supposed to work?</li>
               <li>Are all the necessary conditions and resources available to test the feature?</li>
               <li>Do you understand how the feature should be tested, including the expected results and potential edge cases?</li>
+              <li>Focus on tracking events &amp; remote configs (if any)</li>
             </ul>
           </li>
+          
         </ul></div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
@@ -770,7 +772,7 @@ footer {
         <ul><li>PO &amp; DEV must clear definition of done, acceptance criteria</li></ul></div>
     </div>
 
-    <div class="cd-row" data-roles="dev">
+    <div class="cd-row" data-roles="dev lead">
       <div class="cd-cell cd-cell--out"><p>Bottoms up from DEV</p>
         <ul>
           <li>risks, blockers, etc.</li>
@@ -778,7 +780,8 @@ footer {
           <li>estimation</li>
           <li>timeline</li>
         </ul></div>
-      <div class="cd-cell cd-cell--do"><ul>
+      <div class="cd-cell cd-cell--do"><div class="do-owner" data-owner="dev">
+        <ul>
           <li>Review PRD, code, etc. and follow up with PO to raise any risks, blockers, concerns, etc.</li>
           <li>Breakdown implementation checklists and input estimation.
             <ul>
@@ -791,8 +794,11 @@ footer {
           <li>Buffer adhoc issues (investigate issues)</li>
           <li>Assign &amp; buffer main branch merger</li>
           <li>Submit your plan to PO, Unity Lead</li>
-          <li>PO, Unity Lead review (any mis-understanding, mis-estimation, etc.), escalate tasks that lack resources</li>
         </ul></div>
+        <div class="do-owner" data-owner="lead">
+          <ul>
+            <li>PO, Unity Lead review (any mis-understanding, mis-estimation, etc.), escalate tasks that lack resources</li>
+          </ul></div></div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
         <ul><li>Most DEV mis-estimation root causes</li></ul></div>
@@ -814,16 +820,19 @@ footer {
     <div class="cd-cols"><div>Outcome (checklist)</div><div>Do what</div><div>Issue to fix</div></div>
 
     <div class="cd-group">Before Pre-read</div>
-    <div class="cd-row" data-roles="dev">
+    <div class="cd-row" data-roles="dev lead">
       <div class="cd-cell cd-cell--out"><p>Goal review &amp; retro</p></div>
-      <div class="cd-cell cd-cell--do"><div class="do-owner"><div class="do-owner__label">Review</div>
+      <div class="cd-cell cd-cell--do"><div class="do-owner" data-owner="lead"><div class="do-owner__label">Review</div>
           <ul>
-            <li>Unity Lead move un-finished tasks to next sprint (PO review)</li>
-            <li>DEV add un-finished tasks to next sprint</li>
+            <li>Move un-finished tasks to next sprint (PO review)</li>
+            <li>Review all tasks that has issues in the current sprint</li>
+          </ul></div>
+        <div class="do-owner" data-owner="dev"><div class="do-owner__label">Review</div>
+          <ul>
             <li>Were they delivered on estimate (time log / estimate), on time (due date) and with good quality?</li>
           </ul></div>
-        <div class="do-owner"><div class="do-owner__label">Retro</div>
-          <ul><li>What should we do to do faster and with higher quality?</li></ul></div></div>
+        <div class="do-owner" data-owner="team"><div class="do-owner__label">Retro</div>
+          <ul><li>What should we do to do faster and with higher quality? -> Input to the Retro page of that sprint</li></ul></div></div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
         <ul>
@@ -838,7 +847,7 @@ footer {
           <li>Bugs previous sprint</li>
           <li>What's the pattern (UI issue, missing compared with PRD, etc.)</li>
           <li>What could be prevented in DEV state instead of QC (self-test UI, check PRD, etc.)</li>
-          <li>Please use Slack Retro reaction to log raw issues to review later</li>
+          <li>(Please use Slack Retro reaction to log raw issues to review later)</li>
         </ul></div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
@@ -847,7 +856,10 @@ footer {
 
     <div class="cd-row" data-roles="lead">
       <div class="cd-cell cd-cell--out"><p>Cadences review</p></div>
-      <div class="cd-cell cd-cell--do"><ul><li>Review all of our cadences (Grooming, Pre-planning, Planning, Daily, etc.)</li></ul></div>
+      <div class="cd-cell cd-cell--do"><ul>
+        <li>Review all of our cadences (Grooming, Pre-planning, Planning, Daily, etc.) -> Input to the Retro page of that sprint</li>
+      </ul>
+    </div>
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
         <ul><li>Fix the system, not the fragmented issues</li></ul></div>
@@ -1028,6 +1040,22 @@ footer {
       <div class="cd-cell cd-cell--meta">
         <div class="cd-cell__label issue-label">Issue to fix</div>
         <p class="meta-empty">—</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="po">
+      <div class="cd-cell cd-cell--out"><p>Report about all pillars (MXD, LIVEOPS, MON, UIX, …)</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Make reports about the last week</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">&mdash;</p></div>
+    </div>
+
+    <div class="cd-row" data-roles="lead">
+      <div class="cd-cell cd-cell--out"><p>Report about Tech pillar</p></div>
+      <div class="cd-cell cd-cell--do"><ul><li>Make reports about the last week</li></ul></div>
+      <div class="cd-cell cd-cell--meta">
+        <div class="cd-cell__label issue-label">Issue to fix</div>
+        <p class="meta-empty">&mdash;</p></div>
     </div>
 
     <div class="cd-group">During</div>
