@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "plans/visuals",
   "rewrites": [
     { "source": "/", "destination": "/team-scrum-flow-review.html" }
   ]

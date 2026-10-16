@@ -27,6 +27,7 @@ Then open <http://localhost:8000/team-scrum-flow-review.html>.
 
 ## Deployment
 
-Hosted on Vercel as a static site with no build step. `vercel.json` sets
-`plans/visuals` as the output directory and rewrites `/` to the review page, so
-the relative link between the two pages keeps working unchanged.
+Hosted on Vercel as a static site with no build step. The project's root
+directory is `plans/visuals`, so its `vercel.json` lives there too and rewrites
+`/` to the review page, keeping the relative link between the two pages working
+unchanged.
